@@ -12,10 +12,13 @@
 * 使用 TypeScript2 提昇 JavaScript 
 * 使用 Vue2 框架提昇整體效能 
 
-### Step
+### Step 1
 
-1. ~~於本地端新增一個資料夾~~   
-2. ~~建立本地 Git， 並且 init Git flow~~   
-3. ~~為了未來能接上 Vue 框架，所以先安裝 Vue-Cli webpack 套件~~   
-4. ~~於 GitHub上開啟 GitHub webpage repository~~   
-5. ​先 commit 目前狀態並且 push到 server端看結果
+1. 於 GitHub上開啟 GitHub webpage repository
+2. 於本地端新增一個資料夾
+3. clong git， 並且 init git flow
+4. npm 初始化
+5. 為了未來能接上 Vue 框架，所以先安裝 Vue-Cli webpack 套件
+6. 執行 `npm run build` 讓目前的系統建置一次，產生dist資料夾
+7. 先 commit 目前狀態至 all brach 並且 push到 server端看結果
+
