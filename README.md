@@ -42,4 +42,6 @@
 5. 將會用到的 `CSS`檔用 import 的方式 import 於 `main.js` 檔中 
 6. 某些需要使用 jQuery的部件，我們就參考 vue-semantic 產生 js 檔代替
 7. 變更 `webpack.config.js` 設定檔的內容，讓其他的 `vue`檔也能被轉譯成 `js`檔
-8. ​
+
+
+
