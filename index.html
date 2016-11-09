@@ -2,42 +2,273 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>exsdocumentservice</title>
-
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- Site Properties -->
+    <title>Exs-Chttl841-Doc-webpage</title>
+    <!-- 引用參考 semantic CSS 樣式 -->
+    <link rel="stylesheet" type="text/css" href="../dist/semantic.min.css">
+    <!-- 引用參考 font-awesome CSS 樣式 -->
+    <link rel="stylesheet" type="text/css" href="../dist/font-awesome.min.css">
+    <!-- 引用參考 glide.core CSS 樣式 -->
+    <link rel="stylesheet" type="text/css" href="../dist/glide.core.min.css">
+    <!-- 引用參考 glide.theme CSS 樣式 -->
+    <link rel="stylesheet" type="text/css" href="../dist/glide.theme.min.css">
+    <!-- 引用 jQuery, jQuery 必須在 head 中被引用 -->
+    <script src="../dist/jquery-3.1.1.min.js"></script>
+    <!-- 引用 Glide, Glide 必須在 head 中被引用 -->
+    <script src="../dist/glide.min.js"></script>
+    <!-- 引用 firebase, firebase 必須在 head 中被引用 -->
+    <script src="https://www.gstatic.com/firebasejs/3.5.3/firebase.js"></script>
     <style type="text/css">
-        body {
-            background-color: #FFFFFF;
+        .ui.modal.signup {
+            width: 30%;
+            margin: 0;
+            position: absolute;
+            left: 60%;
+            top: 40%
         }
         
-        .ui.menu .item img.logo {
-            margin-right: 1.5em;
+        .ui.basic.modal.auth {
+            position: absolute;
+            margin: 0 auto;
+            left: 45%;
         }
+        /**
+        * 自適應判斷CSS語法 
+        */
         
-        .main.container {
-            margin-top: 7em;
+        @media only screen and (max-width: 700px) {
+            .ui.fixed.menu {
+                display: none !important;
+            }
+            .secondary.pointing.menu .item,
+            .secondary.pointing.menu .right.item,
+            .secondary.pointing.menu .menu {
+                display: none;
+            }
+            .secondary.pointing.menu .toc.item {
+                display: block;
+            }
         }
-        
-        .wireframe {
-            margin-top: 2em;
-        }
-        
-        .ui.footer.segment {
-            margin: 5em 0em 0em;
-            padding: 5em 0em;
-        }
+        /**
+        *
+        */
     </style>
-
-
 </head>
 
 <body>
-
-    <div id="navbar"></div>
-    <div id="maincontainer"></div>
-    <div id="footer"></div>
+    <!-- 當範圍太小時，自動縮小的 Sidebar Menu Start @ -->
+    <div class="ui right vertical inverted sidebar menu">
+        <a class="active item">Menu Item - Home</a>
+        <a class="item">Menu Item</a>
+        <a class="item">註冊/登入</a>
+    </div>
+    <!-- 當範圍太小時，自動縮小的 Sidebar Menu End # -->
+    <!-- Page Contents Start @ -->
+    <div class="pusher">
+        <!-- 導覽列含功能 Start @ -->
+        <div class="ui inverted vertical masthead center aligned segment">
+            <div class="ui container">
+                <div class="ui large secondary inverted pointing menu">
+                    <a class="toc item">
+                        <img class="ui mini image" src="../dist/icon-main.png">
+                    </a>
+                    <a class="active item">Menu Item - Home</a>
+                    <a class="item">Menu Item</a>
+                    <div class="right item">
+                        <a id="btnSignUpLogin" class="ui inverted button">註冊/登入</a>
+                    </div>
+                </div>
+            </div>
+            <div class="ui modal signup">
+                <form class="ui form attached fluid segment">
+                    <div class="field">
+                        <label>使用者名稱</label>
+                        <input id="inputUserName" name="inputUserName" placeholder="使用者名稱" type="text">
+                    </div>
+                    <div class="field">
+                        <label>信箱</label>
+                        <input id="inputEmail" name="inputEmail" placeholder="信箱" type="text">
+                    </div>
+                    <div class="field">
+                        <label>密碼</label>
+                        <input id="inputPassword" name="inputPassword" placeholder="密碼" type="password">
+                    </div>
+                    <div class="inline field">
+                        <div class="ui checkbox">
+                            <input type="checkbox" name="checkbox" id="terms">
+                            <label for="terms">我同意.......</label>
+                        </div>
+                    </div>
+                    <div id="btnSignUp" class="ui blue button">註冊</div>
+                    <div class="ui error message"></div>
+                </form>
+                <div class="ui bottom attached warning message">
+                    <i class="icon help"></i> Already signed up? <a href="#">Login here</a> instead.
+                </div>
+            </div>
+            <div class="ui basic modal loadiinngg">
+                <div class="ui active dimmer">
+                    <div class="ui centered inline large text loader">Loading</div>
+                </div>
+            </div>
+            <div class="ui basic modal auth successful">
+                <div class="header">
+                    註冊成功
+                </div>
+                <div class="image content">
+                    <div class="image">
+                        <i class="massive green checkmark icon"></i>
+                    </div>
+                    <div class="description">
+                        <p>請到信箱收取驗證信</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ui basic modal auth faild">
+                <div class="header">
+                    註冊失敗
+                </div>
+                <div id="authFaildModal" class="image content">
+                    <div class="image">
+                        <i class="massive red remove icon"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 導覽列含功能 End # -->
+        <!-- 主要產品簡圖輪播列 Start @ -->
+        <div id="Glide" class="glide ui inverted masthead center aligned segment">
+            <div class="glide__arrows">
+                <button class="glide__arrow prev" data-glide-dir="<"> < </button>
+                <button class="glide__arrow next" data-glide-dir=">"> > </button>
+            </div>
+            <div class="glide__wrapper">
+                <ul class="glide__track">
+                    <li class="glide__slide">
+                        <img src="../dist/logo.png">
+                    </li>
+                    <li class="glide__slide">
+                        <img src="../dist/logo.png">
+                    </li>
+                    <li class="glide__slide">
+                        <img src="../dist/logo.png">
+                    </li>
+                </ul>
+            </div>
+            <div class="glide__bullets"></div>
+        </div>
+        <!-- 主要產品簡圖輪播列 End # -->
+        <!-- 主要產品特色細節暨鍊結列 Start @ -->
+        <div class="ui segment">
+            <div class="ui container">
+                <div class="ui three cards">
+                    <div class="ui fluid raised link red card">
+                        <div class="content">
+                            <div class="header">產品一</div>
+                            <div class="meta">
+                                <span class="right floated">適應裝置</span>
+                            </div>
+                            <div class="description">
+                                <a class="image" href="#">
+                                    <img class="ui left floated tiny circular image" src="../dist/logo.png">
+                                </a>
+                                <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos
+                                    choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
+                                <li>特點1</li>
+                                <li>特點2</li>
+                                <li>特點3</li>
+                            </div>
+                            <div class="extra content"></div>
+                            <div class="ui bottom attached button">
+                                <i class="add icon"></i> 前往產品詳細頁面
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui fluid raised link orange card">
+                        <div class="content">
+                            <div class="header">產品二</div>
+                            <div class="meta">
+                                <span class="right floated">適應裝置</span>
+                            </div>
+                            <div class="description">
+                                <a class="image" href="#">
+                                    <img class="ui left floated tiny circular image" src="../dist/logo.png">
+                                </a>
+                                <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos
+                                    choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
+                                <li>特點1</li>
+                                <li>特點2</li>
+                                <li>特點3</li>
+                            </div>
+                            <div class="extra content"></div>
+                            <div class="ui bottom attached button">
+                                <i class="add icon"></i> 前往產品詳細頁面
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui fluid raised link yellow card">
+                        <div class="content">
+                            <div class="header">產品三</div>
+                            <div class="meta">
+                                <span class="right floated">適應裝置</span>
+                            </div>
+                            <div class="description">
+                                <a class="image" href="#">
+                                    <img class="ui left floated tiny circular image" src="../dist/logo.png">
+                                </a>
+                                <p>Te eum doming eirmod, nominati pertinacia argumentum ad his. Ex eam alia facete scriptorem, est autem aliquip detraxit at. Usu ocurreret referrentur at, cu epicurei appellantur vix. Cum ea laoreet recteque electram, eos
+                                    choro alterum definiebas in. Vim dolorum definiebas an. Mei ex natum rebum iisque.</p>
+                                <li>特點1</li>
+                                <li>特點2</li>
+                                <li>特點3</li>
+                            </div>
+                            <div class="extra content"></div>
+                            <div class="ui bottom attached button">
+                                <i class="add icon"></i> 前往產品詳細頁面
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 主要產品特色細節暨鍊結列 End # -->
+        <!-- 底部 Footer 列 @ -->
+        <div class="ui inverted vertical footer segment">
+            <div class="ui container">
+                <div class="ui stackable inverted divided equal height stackable grid">
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">關於</h4>
+                        <div class="ui inverted link list">
+                            <a href="#" class="item">聯絡方式</a>
+                            <a href="#" class="item">公司地址</a>
+                        </div>
+                    </div>
+                    <div class="three wide column">
+                        <h4 class="ui inverted header">追蹤</h4>
+                        <div class="ui inverted link list">
+                            <a href="#" class="item">Facebook</a>
+                            <a href="#" class="item">Github</a>
+                            <a href="#" class="item">Bitbucket</a>
+                        </div>
+                    </div>
+                    <div class="seven wide column">
+                        <h4 class="ui inverted header">版權聲明</h4>
+                        <p>本網站由製作，以創用CC 姓名標示-商業性-禁止改作 4.0 國際 授權條款釋出。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 底部 Footer 列 @ -->
+    </div>
+    <!-- Page Contents End # -->
+    <!-- 引用主要本身開發的 javascript -->
     <script src="../dist/main.js"></script>
-
+    <!-- 引用參考 semantic 的 javascript -->
+    <script src="../dist/semantic.min.js"></script>
 </body>
 
 </html>
